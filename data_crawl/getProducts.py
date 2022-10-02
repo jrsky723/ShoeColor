@@ -76,3 +76,5 @@ for item in items:
   writer.writerow((names, brand, price, image, colors))
 csvFile.close()
 
+# todo 비슷한 색깔로 색깔 단순화 작업, sql로 데이터베이스 저장,
+#신발의 구매를 할 수 있게끔 링크도 따로 저장하는게 나을듯
