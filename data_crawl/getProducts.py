@@ -68,7 +68,7 @@ def getPrice(a):
 
 import csv
 
-csvFile = open("./data/shoes.csv", 'w',encoding='euc-kr', newline='')
+csvFile = open("./data/shoes.csv", 'w',encoding='utf-8', newline='')
 writer = csv.writer(csvFile)
 writer.writerow(('Name', 'Brand', 'Price', 'Image', 'Colors', 'Link'))
 for item in items:

@@ -29,5 +29,3 @@ def closestColor(rgb):
     r,g,b = colorRgb
     differences[sum([(r - rgb[0])**2, (g - rgb[1])**2, (b - rgb[2])**2])] = colorName
   return differences[min(differences.keys())]
-
-print(closestColor((0,0,3)))
