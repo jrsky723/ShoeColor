@@ -1,5 +1,6 @@
 from io import BytesIO
 import re
+from turtle import color
 from urllib.request import urlopen
 from selenium import webdriver
 from bs4 import BeautifulSoup
@@ -12,7 +13,7 @@ driver = webdriver.Chrome('./data_crawl/chromedriver')
 driver.maximize_window()
 driver.get(url)
 
-max_scroll_num = 50
+max_scroll_num = 20
 for _ in range(max_scroll_num):
   driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
   time.sleep(1)
@@ -24,13 +25,18 @@ lis = bsObj.find("div",{"class" : "search_result_list"})
 items = lis.findAll("div", {"class":"search_result_item"})
 
 # 스크롤 이후에 모든 아이템의 데이터를 추출
-from colorthief import ColorThief
+def getLink(a):
+  return 'https://kream.co.kr' + a.get('href')
 
 def getImage(a):
   picture = a.find("picture", {"class" : "picture product_img"})
   source = picture.find("source", {"type" : "image/webp"})
   imgSrc = source.get('srcset')
   return imgSrc
+
+from colorthief import ColorThief
+import Colors as MyCol
+
 def getColors(a):
   imgSrc = getImage(a)
   fd = urlopen(imgSrc)
@@ -38,10 +44,12 @@ def getColors(a):
   color_thief = ColorThief(f)
   palette = color_thief.get_palette(color_count=10, quality=1)
   colors = []
-  for pal in palette:
-    if pal[3] < 9: continue
-    colors.append([pal[0], pal[1], pal[2]])
+  for col in palette:
+    if col[3] < 8: continue
+    cName = MyCol.closestColor(col[0:3])
+    colors.append([cName, col[3]])
   return colors
+
 
 def getNames(a):
   EngName = a.find("p", {"class","name"}).getText()
@@ -60,20 +68,19 @@ def getPrice(a):
 
 import csv
 
-csvFile = open("./data/shoes.csv", 'wt')
-
-
+csvFile = open("./data/shoes.csv", 'w',encoding='euc-kr', newline='')
 writer = csv.writer(csvFile)
-writer.writerow(('Name', 'brand', 'price', 'image', 'colors'))
+writer.writerow(('Name', 'Brand', 'Price', 'Image', 'Colors', 'Link'))
 for item in items:
   a = item.find("a", {"class" : "item_inner"})
   price = getPrice(a)
   if price == 0 : continue
-  colors = getColors(a)
+  link = getLink(a)
+  Colors = getColors(a)
   names = getNames(a)
   brand = getBrand(a)
   image = getImage(a)
-  writer.writerow((names, brand, price, image, colors))
+  writer.writerow((names, brand, price, image, Colors, link))
 csvFile.close()
 
 # todo 비슷한 색깔로 색깔 단순화 작업, sql로 데이터베이스 저장,
