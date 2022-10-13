@@ -13,10 +13,10 @@ driver = webdriver.Chrome('./data_crawl/chromedriver')
 driver.maximize_window()
 driver.get(url)
 
-max_scroll_num = 20
+max_scroll_num = 100
 for _ in range(max_scroll_num):
   driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
-  time.sleep(1)
+  time.sleep(2)
 
 time.sleep(1)
 html = driver.page_source
@@ -26,12 +26,12 @@ items = lis.findAll("div", {"class":"search_result_item"})
 
 # 스크롤 이후에 모든 아이템의 데이터를 추출
 def getLink(a):
-  return 'https://kream.co.kr' + a.get('href')
+  return 'https://kream.co.kr' + a.get('href') + " "
 
 def getImage(a):
   picture = a.find("picture", {"class" : "picture product_img"})
   source = picture.find("source", {"type" : "image/webp"})
-  imgSrc = source.get('srcset')
+  imgSrc = source.get('srcset') + " "
   return imgSrc
 
 from colorthief import ColorThief
@@ -53,8 +53,7 @@ def getColors(a):
 
 def getNames(a):
   EngName = a.find("p", {"class","name"}).getText()
-  KorName = a.find("p", {"class","translated_name"}).getText()
-  return [EngName, KorName]
+  return EngName
 
 def getBrand(a):
   return a.find("p", ["class", "brand"]).getText()
@@ -77,11 +76,8 @@ for item in items:
   if price == 0 : continue
   link = getLink(a)
   Colors = getColors(a)
-  names = getNames(a)
+  name = getNames(a)
   brand = getBrand(a)
   image = getImage(a)
-  writer.writerow((names, brand, price, image, Colors, link))
+  writer.writerow((name, brand, price, image, Colors, link))
 csvFile.close()
-
-# todo 비슷한 색깔로 색깔 단순화 작업, sql로 데이터베이스 저장,
-#신발의 구매를 할 수 있게끔 링크도 따로 저장하는게 나을듯
