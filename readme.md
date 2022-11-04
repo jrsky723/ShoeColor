@@ -7,8 +7,3 @@
 
 **content**
 * [Get Product Infromation](/data_crawl/GetProducts.ipynb)
-
-
-
-* <b>Kream</b> is the most popular shoe resell website in Korea.
-* We will obtain information about the color of the shoes from <b>Kream</b> and conduct a related data investigation.
