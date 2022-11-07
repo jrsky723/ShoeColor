@@ -12,10 +12,11 @@ def getNumber(text):
   return num
 
 # code for check getNumber
-# list = ['9,249','783','1,180','1.8만','1.1만']
-# for idx, txt in enumerate(list):
-#   list[idx] = getNumber(txt)
-# list.sort()
-# for num in list:
-#   print(num)
+if __name__ == "__main__":
+  list = ['9,249','783','1,180','1.8만','1.1만']
+  for idx, txt in enumerate(list):
+    list[idx] = getNumber(txt)
+  list.sort()
+  for num in list:
+    print(num)
   
