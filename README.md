@@ -7,4 +7,8 @@
 
 **contents**
 * [Get Product Infromation](/data_crawl/GetProducts.ipynb)
+  #### Web Scraping using Beautiful Soup and Selenium
 * [Color Clustering](/color/ColorClustering.ipynb)
+   #### Extraction of 25 colors using K-Means Clustering
+    * [Approximate Clustering](/color/ApproximateClustering.ipynb)
+      #### Get 25 distant colors using the Greedy method
