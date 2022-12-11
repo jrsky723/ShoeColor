@@ -2,17 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 import colorsys
-import webcolors
 
-def closest_color(requested_color):
-    min_colors = {}
-    for key, name in webcolors.CSS3_HEX_TO_NAMES.items():
-        r_c, g_c, b_c = webcolors.hex_to_rgb(key)
-        rd = (r_c - requested_color[0]) ** 2
-        gd = (g_c - requested_color[1]) ** 2
-        bd = (b_c - requested_color[2]) ** 2
-        min_colors[(rd + gd + bd)] = name
-    return min_colors[min(min_colors.keys())]
 
 def step (r,g,b, repetitions=1):
     lum = math.sqrt( .241 * r + .691 * g + .068 * b )
@@ -30,6 +20,19 @@ def sort(colorlist):
 
 #reference : https://www.alanzucconi.com/2015/09/30/colour-sorting/
 
+
+# get closest color from webcolors. But we didn't use this function.
+# import webcolors
+
+# def closest_color(requested_color):
+#     min_colors = {}
+#     for key, name in webcolors.CSS3_HEX_TO_NAMES.items():
+#         r_c, g_c, b_c = webcolors.hex_to_rgb(key)
+#         rd = (r_c - requested_color[0]) ** 2
+#         gd = (g_c - requested_color[1]) ** 2
+#         bd = (b_c - requested_color[2]) ** 2
+#         min_colors[(rd + gd + bd)] = name
+#     return min_colors[min(min_colors.keys())]
 
 if __name__ == "__main__" :
   # k = 400
