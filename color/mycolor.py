@@ -18,7 +18,7 @@ def step (r,g,b, repetitions=1):
 def sort(colorlist): 
   colorlist.sort(key=lambda rgb: step(rgb[0],rgb[1],rgb[2], 5))
 
-#reference : https://www.alanzucconi.com/2015/09/30/colour-sorting/
+
 
 
 # get closest color from webcolors. But we didn't use this function.
